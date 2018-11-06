@@ -15,9 +15,9 @@ data = []
 
 column_names = ['Title', 'BSR', 'Price in £ (starting from)', 'Author', 'Book Type', 'ASIN', 'ISBN-10', 'ISBN-13', 'URL']
 
-class Amazon1Spider(scrapy.Spider):
+class AmazonSpider(scrapy.Spider):
 
-	name = 'amazon1'
+	name = 'amazon'
 	start_urls = ['https://www.amazon.co.uk/s/ref=sr_nr_p_36_5?rnid=389022011&rh=n%3A266239%2Cp_n_binding_browse-bin%3A492563011&qid=1540747483&bbn=266239&low-price=2000&high-price=2500']
 
 	def __init__(self):
@@ -95,16 +95,13 @@ class Amazon1Spider(scrapy.Spider):
 						print('ISBN_13: ' + ISBN_13.strip())
 						print('=================================================================')
 						book_type = 'Hardcover'
-						# data.append([title, bsr, price, author, book_type, ASIN, ISBN_10, ISBN_13, url])
-						# with open('test2000-2500-hardcover.txt', 'w') as f:
-						# 	for item in data:
-						# 		f.write("%s\n" % item)
+						data.append([title, bsr, price, author, book_type, ASIN, ISBN_10, ISBN_13, url])
 
 	def spider_closed(self, spider):
 		print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-		# outfile = open('2000_2500_under_10_million.csv', 'w')
-		# outcsv = csv.writer(outfile)
-		# outcsv.writerow([column for column in column_names])
-		# [outcsv.writerow([value for value in item]) for item in data]
-		# outfile.close()
+		outfile = open('amazonData.csv', 'w')
+		outcsv = csv.writer(outfile)
+		outcsv.writerow([column for column in column_names])
+		[outcsv.writerow([value for value in item]) for item in data]
+		outfile.close()
 		print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
